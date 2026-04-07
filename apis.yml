@@ -12,17 +12,17 @@ created: '2024-12-25'
 modified: '2026-03-16'
 specificationVersion: '0.19'
 tags:
+  - Cancer
   - Federal Government
   - Health
-  - Cancer
   - Research
 apis:
   - aid: national-cancer-institute:gdc-api
     name: NCI Genomic Data Commons API
     tags:
       - Cancer
-      - Genomics
       - Data
+      - Genomics
     humanURL: https://gdc.cancer.gov/developers/gdc-application-programming-interface-api
     baseURL: https://api.gdc.cancer.gov/
     properties:
