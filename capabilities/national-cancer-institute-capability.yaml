@@ -1,0 +1,627 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: NCI Genomic Data Commons (GDC) API
+  description: The GDC API provides programmatic access to cancer genomic and clinical data hosted by the National Cancer
+    Institute Genomic Data Commons. The API supports search and retrieval of projects, cases, files, and annotations, along
+    with file download, BAM slicing, and data submission workflows.
+  tags:
+  - National
+  - Cancer
+  - Institute
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: national-cancer-institute
+    baseUri: https://api.gdc.cancer.gov
+    description: NCI Genomic Data Commons (GDC) API HTTP API.
+    authentication:
+      type: apikey
+      in: header
+      name: X-Auth-Token
+      value: '{{NATIONAL_CANCER_INSTITUTE_TOKEN}}'
+    resources:
+    - name: status
+      path: /status
+      operations:
+      - name: getstatus
+        method: GET
+        description: Get API status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: projects
+      path: /projects
+      operations:
+      - name: searchprojects
+        method: GET
+        description: Search projects
+        inputParameters:
+        - name: filters
+          in: query
+          type: string
+        - name: fields
+          in: query
+          type: string
+        - name: size
+          in: query
+          type: integer
+        - name: from
+          in: query
+          type: integer
+        - name: sort
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: projects-project-id
+      path: /projects/{project_id}
+      operations:
+      - name: getproject
+        method: GET
+        description: Get project by ID
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: cases
+      path: /cases
+      operations:
+      - name: searchcases
+        method: GET
+        description: Search cases
+        inputParameters:
+        - name: filters
+          in: query
+          type: string
+        - name: fields
+          in: query
+          type: string
+        - name: size
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: cases-case-id
+      path: /cases/{case_id}
+      operations:
+      - name: getcase
+        method: GET
+        description: Get case by ID
+        inputParameters:
+        - name: case_id
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: files
+      path: /files
+      operations:
+      - name: searchfiles
+        method: GET
+        description: Search files
+        inputParameters:
+        - name: filters
+          in: query
+          type: string
+        - name: fields
+          in: query
+          type: string
+        - name: size
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: files-file-id
+      path: /files/{file_id}
+      operations:
+      - name: getfile
+        method: GET
+        description: Get file metadata by ID
+        inputParameters:
+        - name: file_id
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: annotations
+      path: /annotations
+      operations:
+      - name: searchannotations
+        method: GET
+        description: Search annotations
+        inputParameters:
+        - name: filters
+          in: query
+          type: string
+        - name: fields
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: data-file-id
+      path: /data/{file_id}
+      operations:
+      - name: downloadfile
+        method: GET
+        description: Download a file
+        inputParameters:
+        - name: file_id
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: manifest
+      path: /manifest
+      operations:
+      - name: getmanifest
+        method: GET
+        description: Generate manifest
+        inputParameters:
+        - name: filters
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: slicing-view-file-id
+      path: /slicing/view/{file_id}
+      operations:
+      - name: slicebam
+        method: GET
+        description: BAM slicing
+        inputParameters:
+        - name: file_id
+          in: path
+          type: string
+          required: true
+        - name: region
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: submission-program-project
+      path: /submission/{program}/{project}
+      operations:
+      - name: getsubmissionproject
+        method: GET
+        description: Get submission program/project resources
+        inputParameters:
+        - name: program
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: national-cancer-institute-rest
+    description: REST adapter for NCI Genomic Data Commons (GDC) API.
+    resources:
+    - path: /status
+      name: getstatus
+      operations:
+      - method: GET
+        name: getstatus
+        description: Get API status
+        call: national-cancer-institute.getstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /projects
+      name: searchprojects
+      operations:
+      - method: GET
+        name: searchprojects
+        description: Search projects
+        call: national-cancer-institute.searchprojects
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /projects/{project_id}
+      name: getproject
+      operations:
+      - method: GET
+        name: getproject
+        description: Get project by ID
+        call: national-cancer-institute.getproject
+        with:
+          project_id: rest.project_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /cases
+      name: searchcases
+      operations:
+      - method: GET
+        name: searchcases
+        description: Search cases
+        call: national-cancer-institute.searchcases
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /cases/{case_id}
+      name: getcase
+      operations:
+      - method: GET
+        name: getcase
+        description: Get case by ID
+        call: national-cancer-institute.getcase
+        with:
+          case_id: rest.case_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /files
+      name: searchfiles
+      operations:
+      - method: GET
+        name: searchfiles
+        description: Search files
+        call: national-cancer-institute.searchfiles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /files/{file_id}
+      name: getfile
+      operations:
+      - method: GET
+        name: getfile
+        description: Get file metadata by ID
+        call: national-cancer-institute.getfile
+        with:
+          file_id: rest.file_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /annotations
+      name: searchannotations
+      operations:
+      - method: GET
+        name: searchannotations
+        description: Search annotations
+        call: national-cancer-institute.searchannotations
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /data/{file_id}
+      name: downloadfile
+      operations:
+      - method: GET
+        name: downloadfile
+        description: Download a file
+        call: national-cancer-institute.downloadfile
+        with:
+          file_id: rest.file_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /manifest
+      name: getmanifest
+      operations:
+      - method: GET
+        name: getmanifest
+        description: Generate manifest
+        call: national-cancer-institute.getmanifest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /slicing/view/{file_id}
+      name: slicebam
+      operations:
+      - method: GET
+        name: slicebam
+        description: BAM slicing
+        call: national-cancer-institute.slicebam
+        with:
+          file_id: rest.file_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /submission/{program}/{project}
+      name: getsubmissionproject
+      operations:
+      - method: GET
+        name: getsubmissionproject
+        description: Get submission program/project resources
+        call: national-cancer-institute.getsubmissionproject
+        with:
+          program: rest.program
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: national-cancer-institute-mcp
+    transport: http
+    description: MCP adapter for NCI Genomic Data Commons (GDC) API for AI agent use.
+    tools:
+    - name: getstatus
+      description: Get API status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.getstatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchprojects
+      description: Search projects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.searchprojects
+      with:
+        filters: tools.filters
+        fields: tools.fields
+        size: tools.size
+        from: tools.from
+        sort: tools.sort
+      inputParameters:
+      - name: filters
+        type: string
+        description: filters
+      - name: fields
+        type: string
+        description: fields
+      - name: size
+        type: integer
+        description: size
+      - name: from
+        type: integer
+        description: from
+      - name: sort
+        type: string
+        description: sort
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getproject
+      description: Get project by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.getproject
+      with:
+        project_id: tools.project_id
+      inputParameters:
+      - name: project_id
+        type: string
+        description: project_id
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchcases
+      description: Search cases
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.searchcases
+      with:
+        filters: tools.filters
+        fields: tools.fields
+        size: tools.size
+      inputParameters:
+      - name: filters
+        type: string
+        description: filters
+      - name: fields
+        type: string
+        description: fields
+      - name: size
+        type: integer
+        description: size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcase
+      description: Get case by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.getcase
+      with:
+        case_id: tools.case_id
+      inputParameters:
+      - name: case_id
+        type: string
+        description: case_id
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchfiles
+      description: Search files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.searchfiles
+      with:
+        filters: tools.filters
+        fields: tools.fields
+        size: tools.size
+      inputParameters:
+      - name: filters
+        type: string
+        description: filters
+      - name: fields
+        type: string
+        description: fields
+      - name: size
+        type: integer
+        description: size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getfile
+      description: Get file metadata by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.getfile
+      with:
+        file_id: tools.file_id
+      inputParameters:
+      - name: file_id
+        type: string
+        description: file_id
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchannotations
+      description: Search annotations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.searchannotations
+      with:
+        filters: tools.filters
+        fields: tools.fields
+      inputParameters:
+      - name: filters
+        type: string
+        description: filters
+      - name: fields
+        type: string
+        description: fields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: downloadfile
+      description: Download a file
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.downloadfile
+      with:
+        file_id: tools.file_id
+      inputParameters:
+      - name: file_id
+        type: string
+        description: file_id
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getmanifest
+      description: Generate manifest
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.getmanifest
+      with:
+        filters: tools.filters
+      inputParameters:
+      - name: filters
+        type: string
+        description: filters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: slicebam
+      description: BAM slicing
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.slicebam
+      with:
+        file_id: tools.file_id
+        region: tools.region
+      inputParameters:
+      - name: file_id
+        type: string
+        description: file_id
+        required: true
+      - name: region
+        type: string
+        description: region
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getsubmissionproject
+      description: Get submission program/project resources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute.getsubmissionproject
+      with:
+        program: tools.program
+        project: tools.project
+      inputParameters:
+      - name: program
+        type: string
+        description: program
+        required: true
+      - name: project
+        type: string
+        description: project
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    NATIONAL_CANCER_INSTITUTE_TOKEN: NATIONAL_CANCER_INSTITUTE_TOKEN
