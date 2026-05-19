@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: NCI Genomic Data Commons (GDC) API — Submission
+  description: 'NCI Genomic Data Commons (GDC) API — Submission. 1 operations. Lead operation: Get submission program/project
+    resources. Self-contained Naftiko capability covering one National Cancer Institute business surface.'
+  tags:
+  - National Cancer Institute
+  - Submission
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    NATIONAL_CANCER_INSTITUTE_API_KEY: NATIONAL_CANCER_INSTITUTE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: national-cancer-institute-submission
+    baseUri: https://api.gdc.cancer.gov
+    description: NCI Genomic Data Commons (GDC) API — Submission business capability. Self-contained, no shared references.
+    resources:
+    - name: submission-program-project
+      path: /submission/{program}/{project}
+      operations:
+      - name: getsubmissionproject
+        method: GET
+        description: Get submission program/project resources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: program
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-Auth-Token
+      value: '{{env.NATIONAL_CANCER_INSTITUTE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: national-cancer-institute-submission-rest
+    port: 8080
+    description: REST adapter for NCI Genomic Data Commons (GDC) API — Submission. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/submission/{program}/{project}
+      name: submission-program-project
+      description: REST surface for submission-program-project.
+      operations:
+      - method: GET
+        name: getsubmissionproject
+        description: Get submission program/project resources
+        call: national-cancer-institute-submission.getsubmissionproject
+        with:
+          program: rest.program
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: national-cancer-institute-submission-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for NCI Genomic Data Commons (GDC) API — Submission. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-submission-program-project-resources
+      description: Get submission program/project resources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: national-cancer-institute-submission.getsubmissionproject
+      with:
+        program: tools.program
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
