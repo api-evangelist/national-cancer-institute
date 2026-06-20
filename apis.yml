@@ -5,7 +5,7 @@ description: >-
   part of the National Institutes of Health. NCI provides data and APIs for cancer genomics, clinical trials, and drug
   information.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://www.cancer.gov/
 created: '2024-12-25'
 modified: '2026-05-19'
