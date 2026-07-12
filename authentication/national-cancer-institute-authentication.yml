@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/national-cancer-institute-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: GdcAuthToken
+  type: apiKey
+  in: header
+  parameter: X-Auth-Token
+  sources:
+  - openapi/national-cancer-institute-openapi.yml
