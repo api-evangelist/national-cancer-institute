@@ -37,6 +37,8 @@ apis:
       research and precision medicine. Endpoints include status, projects, cases, files, annotations, data download,
       manifest generation, BAM slicing, and submission.
 common:
+  - type: AgenticAccess
+    url: agentic-access/national-cancer-institute-agentic-access.yml
   - type: DomainSecurity
     url: security/national-cancer-institute-domain-security.yml
   - type: Authentication
