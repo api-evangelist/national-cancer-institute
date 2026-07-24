@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: NCI Genomic Data Commons (GDC) Download API
+  description: The GDC API provides programmatic access to cancer genomic and clinical data hosted by the National Cancer Institute Genomic Data Commons. The API supports search and retrieval of projects, cases, files, and annotations, along with file download, BAM slicing, and data submission workflows.
+  version: 1.0.0
+  contact:
+    name: NCI Genomic Data Commons
+    url: https://gdc.cancer.gov/developers/gdc-application-programming-interface-api
+servers:
+- url: https://api.gdc.cancer.gov
+  description: GDC API latest
+- url: https://api.gdc.cancer.gov/v0
+  description: GDC API v0
+security:
+- GdcAuthToken: []
+tags:
+- name: Download
+paths:
+  /data/{file_id}:
+    get:
+      tags:
+      - Download
+      summary: Download a file
+      description: Download an open-access file by ID. Controlled data requires a token.
+      operationId: downloadFile
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File data
+        '401':
+          description: Authentication required for controlled data
+  /manifest:
+    get:
+      tags:
+      - Download
+      summary: Generate manifest
+      description: Generate a manifest for use with the GDC Data Transfer Tool.
+      operationId: getManifest
+      parameters:
+      - name: filters
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Manifest
+  /slicing/view/{file_id}:
+    get:
+      tags:
+      - Download
+      summary: BAM slicing
+      description: Retrieve a slice of a BAM file by genomic region.
+      operationId: sliceBam
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: region
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: BAM slice
+        '401':
+          description: Authentication required
+components:
+  securitySchemes:
+    GdcAuthToken:
+      type: apiKey
+      in: header
+      name: X-Auth-Token

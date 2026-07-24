@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: NCI Genomic Data Commons (GDC) Download Search API
+  description: The GDC API provides programmatic access to cancer genomic and clinical data hosted by the National Cancer Institute Genomic Data Commons. The API supports search and retrieval of projects, cases, files, and annotations, along with file download, BAM slicing, and data submission workflows.
+  version: 1.0.0
+  contact:
+    name: NCI Genomic Data Commons
+    url: https://gdc.cancer.gov/developers/gdc-application-programming-interface-api
+servers:
+- url: https://api.gdc.cancer.gov
+  description: GDC API latest
+- url: https://api.gdc.cancer.gov/v0
+  description: GDC API v0
+security:
+- GdcAuthToken: []
+tags:
+- name: Search
+paths:
+  /projects:
+    get:
+      tags:
+      - Search
+      summary: Search projects
+      description: Search and retrieve metadata about projects available in the GDC.
+      operationId: searchProjects
+      parameters:
+      - name: filters
+        in: query
+        schema:
+          type: string
+      - name: fields
+        in: query
+        schema:
+          type: string
+      - name: size
+        in: query
+        schema:
+          type: integer
+      - name: from
+        in: query
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Project search results
+  /projects/{project_id}:
+    get:
+      tags:
+      - Search
+      summary: Get project by ID
+      operationId: getProject
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Project details
+  /cases:
+    get:
+      tags:
+      - Search
+      summary: Search cases
+      description: Search cases (donors) and their associated files.
+      operationId: searchCases
+      parameters:
+      - name: filters
+        in: query
+        schema:
+          type: string
+      - name: fields
+        in: query
+        schema:
+          type: string
+      - name: size
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Case search results
+  /cases/{case_id}:
+    get:
+      tags:
+      - Search
+      summary: Get case by ID
+      operationId: getCase
+      parameters:
+      - name: case_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Case details
+  /files:
+    get:
+      tags:
+      - Search
+      summary: Search files
+      description: Search for files in the GDC by characteristics.
+      operationId: searchFiles
+      parameters:
+      - name: filters
+        in: query
+        schema:
+          type: string
+      - name: fields
+        in: query
+        schema:
+          type: string
+      - name: size
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: File search results
+  /files/{file_id}:
+    get:
+      tags:
+      - Search
+      summary: Get file metadata by ID
+      operationId: getFile
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File metadata
+  /annotations:
+    get:
+      tags:
+      - Search
+      summary: Search annotations
+      description: Retrieve curation annotations attached to GDC entities.
+      operationId: searchAnnotations
+      parameters:
+      - name: filters
+        in: query
+        schema:
+          type: string
+      - name: fields
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Annotation search results
+components:
+  securitySchemes:
+    GdcAuthToken:
+      type: apiKey
+      in: header
+      name: X-Auth-Token

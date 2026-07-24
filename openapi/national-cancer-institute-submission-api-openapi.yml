@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: NCI Genomic Data Commons (GDC) Download Submission API
+  description: The GDC API provides programmatic access to cancer genomic and clinical data hosted by the National Cancer Institute Genomic Data Commons. The API supports search and retrieval of projects, cases, files, and annotations, along with file download, BAM slicing, and data submission workflows.
+  version: 1.0.0
+  contact:
+    name: NCI Genomic Data Commons
+    url: https://gdc.cancer.gov/developers/gdc-application-programming-interface-api
+servers:
+- url: https://api.gdc.cancer.gov
+  description: GDC API latest
+- url: https://api.gdc.cancer.gov/v0
+  description: GDC API v0
+security:
+- GdcAuthToken: []
+tags:
+- name: Submission
+paths:
+  /submission/{program}/{project}:
+    get:
+      tags:
+      - Submission
+      summary: Get submission program/project resources
+      operationId: getSubmissionProject
+      parameters:
+      - name: program
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Submission resource
+        '401':
+          description: Authentication required
+components:
+  securitySchemes:
+    GdcAuthToken:
+      type: apiKey
+      in: header
+      name: X-Auth-Token

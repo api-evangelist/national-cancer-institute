@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: NCI Genomic Data Commons (GDC) Download Status API
+  description: The GDC API provides programmatic access to cancer genomic and clinical data hosted by the National Cancer Institute Genomic Data Commons. The API supports search and retrieval of projects, cases, files, and annotations, along with file download, BAM slicing, and data submission workflows.
+  version: 1.0.0
+  contact:
+    name: NCI Genomic Data Commons
+    url: https://gdc.cancer.gov/developers/gdc-application-programming-interface-api
+servers:
+- url: https://api.gdc.cancer.gov
+  description: GDC API latest
+- url: https://api.gdc.cancer.gov/v0
+  description: GDC API v0
+security:
+- GdcAuthToken: []
+tags:
+- name: Status
+paths:
+  /status:
+    get:
+      tags:
+      - Status
+      summary: Get API status
+      description: Returns API status and version information.
+      operationId: getStatus
+      responses:
+        '200':
+          description: API status response
+components:
+  securitySchemes:
+    GdcAuthToken:
+      type: apiKey
+      in: header
+      name: X-Auth-Token
