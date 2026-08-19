@@ -1,0 +1,117 @@
+{
+  "item": [
+    {
+      "id": "e2716cae-4cb2-49ae-9760-94b9dd30bb04",
+      "name": "Status",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "90cbdae9-8ea5-4ee5-a3cb-ad23d4d70492",
+          "name": "Get API status",
+          "request": {
+            "name": "Get API status",
+            "description": {
+              "content": "Returns API status and version information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "54e342d9-382d-4774-b903-4791a6c6d03c",
+              "name": "API status response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.gdc.cancer.gov",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Auth-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2f075203-ac2f-41dd-930b-b2021c04c002",
+    "name": "NCI Genomic Data Commons (GDC) Download Status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The GDC API provides programmatic access to cancer genomic and clinical data hosted by the National Cancer Institute Genomic Data Commons. The API supports search and retrieval of projects, cases, files, and annotations, along with file download, BAM slicing, and data submission workflows.\n\nContact Support:\n Name: NCI Genomic Data Commons",
+      "type": "text/plain"
+    }
+  }
+}

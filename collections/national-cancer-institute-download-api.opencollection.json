@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCI Genomic Data Commons (GDC) Download API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Download",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/data/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download an open-access file by ID. Controlled data requires a token."
+        },
+        {
+          "info": {
+            "name": "Generate manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/manifest",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Generate a manifest for use with the GDC Data Transfer Tool."
+        },
+        {
+          "info": {
+            "name": "BAM slicing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/slicing/view/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a slice of a BAM file by genomic region."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

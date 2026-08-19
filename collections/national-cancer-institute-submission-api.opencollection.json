@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCI Genomic Data Commons (GDC) Download Submission API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Submission",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get submission program/project resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/submission/:program/:project",
+            "params": [
+              {
+                "name": "program",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get submission program/project resources"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

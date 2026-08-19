@@ -1,0 +1,197 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCI Genomic Data Commons (GDC) Download Search API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/projects",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search and retrieve metadata about projects available in the GDC."
+        },
+        {
+          "info": {
+            "name": "Get project by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/projects/:project_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get project by ID"
+        },
+        {
+          "info": {
+            "name": "Search cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/cases",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search cases (donors) and their associated files."
+        },
+        {
+          "info": {
+            "name": "Get case by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/cases/:case_id",
+            "params": [
+              {
+                "name": "case_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get case by ID"
+        },
+        {
+          "info": {
+            "name": "Search files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/files",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search for files in the GDC by characteristics."
+        },
+        {
+          "info": {
+            "name": "Get file metadata by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get file metadata by ID"
+        },
+        {
+          "info": {
+            "name": "Search annotations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.gdc.cancer.gov/annotations",
+            "params": [
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve curation annotations attached to GDC entities."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
