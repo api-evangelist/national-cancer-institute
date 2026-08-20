@@ -25,6 +25,11 @@ modified: '2026-05-19'
 specificationVersion: '0.23'
 tags:
   - Cancer
+  - Federal-Government
+  - Health
+  - Research
+tags_raw:
+  - Cancer
   - Federal Government
   - Health
   - Research
@@ -35,6 +40,8 @@ apis:
   humanURL: https://gdc.cancer.gov/developers/gdc-application-programming-interface-api
   baseURL: https://api.gdc.cancer.gov/
   tags:
+  - Downloads
+  tags_raw:
   - Download
   properties:
   - type: OpenAPI
